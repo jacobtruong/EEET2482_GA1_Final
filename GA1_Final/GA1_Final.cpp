@@ -60,15 +60,16 @@ void sortFunction(double* arr, int size) {
 	}
 }
 
+//Function to count line of csv file
 int countLine(string filename) {
-	ifstream file(filename);
-	int count = 0;
+	ifstream file(filename); //Open the file
+	int count = 0; 
 
 	string line;
-	while (getline(file, line)) {
-		count++;
+	while (getline(file, line)) { //Ignore unnecessary characters 'x', 'y', ',' 
+		count++; //count the number of line 
 	}
-	file.close();
+	file.close(); //Close the file 
 	return count;
 }
 
