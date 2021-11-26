@@ -82,13 +82,28 @@ double findMean(double* arr, unsigned int size) {
 }
 
 //B.1 Function to find the Median value
-double findMedian(double* arr, int size) {
-	if (size % 2 == 1) { //check if the array size is odd.
-		return arr[size / 2]; //return the median of the odd array
-	}
-	else if (size % 2 == 0) { //check if the array size is even.
-		return (arr[(size / 2) - 1] + arr[(size / 2)]) / 2; //return the median of the even array
-	}
+//double findMedian(double* arr, int size) {
+//	if (size % 2 == 1) { //check if the array size is odd.
+//		return arr[size / 2]; //return the median of the odd array
+//	}
+//	else if (size % 2 == 0) { //check if the array size is even.
+//		return (arr[(size / 2) - 1] + arr[(size / 2)]) / 2; //return the median of the even array
+//	}
+//}
+
+double findMedian(double* arr, int arraySize) {
+	float q2_position_full = -1 + 2 * double(arraySize) / 4 + 0.5;
+
+	// Taking the integer part
+	int q2_position_int = int(q2_position_full);
+
+	// Taking the fractional part
+	float q2_position_frac = q2_position_full - q2_position_int;
+
+	// Calculating the Median (Q2 - 2nd Quartile) value
+	double q2 = arr[q2_position_int] + (arr[q2_position_int + 1] - arr[q2_position_int]) * q2_position_frac;
+
+	return q2;
 }
 
 //B.2 Function to find the Mode value
