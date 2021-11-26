@@ -146,14 +146,6 @@ double findStandardDeviation(double variance) {
 }
 
 //B.4 Function to find mean standard deviation
-//double findMAD(double* arr, int size) {
-//	double sum = 0;
-//
-//	for (int i = 0; i < size; i++) //for each row in the dataset
-//		sum = sum + abs(arr[i] - findMean(arr, size)); //calculation
-//
-//	return sum / size; //return the mean standard deviation
-//}
 double findMAD(double* arr, int size, double mean) {
 	double sum = 0;
 
@@ -194,12 +186,6 @@ double findSkewness(double* arr, int arraySize, double mean, double standard_dev
 }
 
 // B.7 Function to find kurtosis
-//double findKurtosis(double* arr, int size) {
-//	double sum = 0;
-//	for (int i = 0; i < size; i++) //for each row in the dataset
-//		sum += pow((arr[i] - findMean(arr, size)), 4); //calculation
-//	return (sum / ((size * pow(findStandardDeviation(findVariance(arr, size)), 4)))) - 3; //return the kurtosis
-//}
 double findKurtosis(double* arr, int size, double mean, double standard_deviation) {
 	double sum = 0;
 	for (int i = 0; i < size; i++) //for each row in the dataset
@@ -208,19 +194,7 @@ double findKurtosis(double* arr, int size, double mean, double standard_deviatio
 }
 
 
-//C.1 Function to find the Covariance              
-//double findCovariance(double* arrX, double* arrY, int size) {
-//	double sum = 0;
-//
-//	//For loop to count sum of x-mean(x) * y-mean(y).
-//	for (int i = 1; i < size; i++) {
-//		sum = sum + (arrX[i] - findMean(arrX, size)) * (arrY[i] - findMean(arrY, size));
-//	}
-//
-//	sum = sum / (size - 1); //Calculate Covariance by dividing sum by (size - 1).
-//
-//	return sum;
-//}
+//C.1 Function to find the Covariance    
 double findCovariance(double* arrX, double* arrY, int size, double x_mean, double y_mean) {
 	double sum = 0;
 
@@ -254,30 +228,12 @@ double findCorrelationCoefficient(double* arrX, double* arrY, int size) {
 }
 
 //C.3 Function to find linear regression
-//void findLinearRegression(double* arr1, double* arr2, int size) {
-//	// variables declaration and assignment
-//	double mean_x = findMean(arr1, size);
-//	double mean_y = findMean(arr2, size);
-//	double stdev_x = findStandardDeviation(findVariance(arr1, size));
-//	double stdev_y = findStandardDeviation(findVariance(arr2, size));
-//	double r = findCorrelationCoefficient(arr1, arr2, size);
-//
-//	// calculations
-//	double a = r * stdev_y / stdev_x;
-//	double b = mean_y - a * mean_x;
-//
-//	//output the equation
-//	/*cout << "the  linear  regression  fit  between  variables  x  and  y " << endl;*/
-//	cout << "y = " << a << "x + " << b << endl;
-//}
-
 void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, double y_mean, double x_stdev, double y_stdev, double correlation_coefficient) {
 	// calculations
 	double a = correlation_coefficient * y_stdev / x_stdev;
 	double b = y_mean - a * x_mean;
 
-	//output the equation
-	/*cout << "the  linear  regression  fit  between  variables  x  and  y " << endl;*/
+	//output the equation	
 	cout << "y = " << a << "x + " << b << endl;
 }
 
