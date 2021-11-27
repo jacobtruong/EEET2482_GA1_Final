@@ -214,7 +214,7 @@ double findCovariance(double* arrX, double* arrY, int size, double x_mean, doubl
 	double sum = 0;
 
 	//For loop to count sum of x-mean(x) * y-mean(y).
-	for (int i = 1; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		sum = sum + (arrX[i] - x_mean) * (arrY[i] - y_mean);
 	}
 
