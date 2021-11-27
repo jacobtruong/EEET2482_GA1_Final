@@ -330,8 +330,8 @@ int main(int argc, char* argv[]) {
 	delete(xArrRaw);
 	delete(yArrRaw);
 
-	char* unsortedx = new double[arraySize];
-	char* unsortedy = new double[arraySize];
+	double* unsortedx = new double[arraySize];
+	double* unsortedy = new double[arraySize];
 
 	for (int i = 0; i <= arraySize; i++) {
 		unsortedx[i] = xArr[i];
