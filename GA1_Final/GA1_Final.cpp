@@ -149,7 +149,7 @@ double findVariance(double* arr, unsigned int size) {
 	for (unsigned int i = 0; i < size; i++) { //For loop to count the sum of (x-mean(x))^2.
 		sum = sum + pow(arr[i] - findMean(arr, size), 2);
 	}
-	double var = sum / (size - 2); //Calculate the variance by dividing sum by (size - 1 - 1) in the true size.
+	double var = sum / (size - 1); //Calculate the variance by dividing sum by (size - 1 - 1) in the true size.
 	return var;
 }
 
