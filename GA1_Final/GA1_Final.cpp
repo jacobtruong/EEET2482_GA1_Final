@@ -330,6 +330,14 @@ int main(int argc, char* argv[]) {
 	delete(xArrRaw);
 	delete(yArrRaw);
 
+	char* unsortedx = new double[arraySize];
+	char* unsortedy = new double[arraySize];
+
+	for (int i = 0; i <= arraySize; i++) {
+		unsortedx[i] = xArr[i];
+		unsortedy[i] = yArr[i];
+	}
+
 	// Sort the arrays
 	sortFunction(xArr, arraySize);
 	sortFunction(yArr, arraySize);
@@ -371,9 +379,9 @@ int main(int argc, char* argv[]) {
 	// Task C
 	cout << "\nTask C:\n";
 	// C.1
-	cout << "cov(x_y) = " << findCovariance(xArr, yArr, arraySize, x_mean, y_mean) << endl;
+	cout << "cov(x_y) = " << findCovariance(unsortedx, unsortedy, arraySize, x_mean, y_mean) << endl;
 	// C.2
-	double correlation_coefficient = findCorrelationCoefficient(xArr, yArr, arraySize);
+	double correlation_coefficient = findCorrelationCoefficient(unsortedx, unsortedy, arraySize);
 	cout << "r(x_y) = " << correlation_coefficient << endl;
 	// C.3
 	findLinearRegression(xArr, yArr, arraySize, x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
