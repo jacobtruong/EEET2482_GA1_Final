@@ -218,7 +218,7 @@ double findCovariance(double* arrX, double* arrY, int size, double x_mean, doubl
 		sum = sum + (arrX[i] - x_mean) * (arrY[i] - y_mean);
 	}
 
-	sum = sum / (size - 1); //Calculate Covariance by dividing sum by (size - 1).
+	sum = sum / (size - 1 - 1); //Calculate Covariance by dividing sum by (size - 1).
 
 	return sum;
 }
