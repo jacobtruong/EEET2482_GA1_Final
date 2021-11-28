@@ -73,7 +73,7 @@ int countLine(string filename) {
 }
 
 //Function to find the Mean of the array.
-double findMean(double* arr, unsigned int size) {
+double findMean(double* arr, int size) {
 	double sum = 0;
 	for (int i = 0; i < size; i++) {
 		sum += arr[i];
@@ -92,7 +92,7 @@ double findMean(double* arr, unsigned int size) {
 //}
 
 double findMedian(double* arr, int arraySize) {
-	float q2_position_full = -1 + 2 * double(arraySize) / 4 + 0.5;
+	float q2_position_full = -1 + 2 * float(arraySize) / 4 + 0.5;
 
 	// Taking the integer part
 	int q2_position_int = int(q2_position_full);
@@ -144,9 +144,9 @@ double findMode(double* arr, int size) {
 }
 
 //B.3.1 Function to Find the variance 
-double findVariance(double* arr, unsigned int size) {
+double findVariance(double* arr, int size) {
 	double sum = 0;
-	for (unsigned int i = 0; i < size; i++) { //For loop to count the sum of (x-mean(x))^2.
+	for (int i = 0; i < size; i++) { //For loop to count the sum of (x-mean(x))^2.
 		sum = sum + pow(arr[i] - findMean(arr, size), 2);
 	}
 	double var = sum / (size - 1); //Calculate the variance by dividing sum by (size - 1 - 1) in the true size.
@@ -181,7 +181,7 @@ double find3rdQuartile(double* arr, int arraySize) {
 	// Taking the fractional part
 	float q3_position_frac = q3_position_full - q3_position_int;
 
-	// Calculating the Quartile value
+	// Calculating the 3rd Quartile (Q3) value
 	double q3 = arr[q3_position_int] + (arr[q3_position_int + 1] - arr[q3_position_int]) * q3_position_frac;
 
 	return q3;
@@ -252,31 +252,21 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 	cout << "y = " << a << "x + " << b << endl;
 }
 
+double** processArray(string fileName) {
+	// Open file
+	ifstream file(fileName);
 
-int main(int argc, char* argv[]) {
-	/* Time function returns the time since the
-		Epoch(jan 1 1970). Returned time is in seconds. */
-	time_t start, end;
-
-	/* You can call it like this : start = time(NULL);
-	 in both the way start contain total time in seconds
-	 since the Epoch. */
-	time(&start);
-
-	// unsync the I/O of C and C++.
-	ios_base::sync_with_stdio(false);
-
-
-
-	// Return error code -1 when file has been unsuccessfully opened
-	ifstream file(argv[1]);
-	if (!file) {
-		cerr << "Cannot open file.\n";
-		return -1;
-	}
+	//// Return an array of {{-1}, {-1}} to mark an error
+	//if (!file) {
+	//	cerr << "Cannot open file.\n";
+	//	double** err = new double* [2];
+	//	err[0] = new double[1]{ -1 };
+	//	err[1] = new double[1]{ -1 };
+	//	EXIT_FAILURE;
+	//}
 
 	// Count the number of lines within the csv file
-	int arraySizeRaw = countLine(argv[1]);
+	int arraySizeRaw = countLine(fileName);
 
 	// Create "heap" arrays with the counted size, then initialise all the elements with null
 	double* xArrRaw = new double[arraySizeRaw] {'\0'};
@@ -330,6 +320,64 @@ int main(int argc, char* argv[]) {
 	delete(xArrRaw);
 	delete(yArrRaw);
 
+	double** tmp = new double* [3];
+
+	for (int i = 0; i < 3; i++) {
+		tmp[i] = new double[arraySize];
+	}
+
+	for (int i = 0; i < arraySize; i++) {
+		tmp[0][i] = xArr[i];
+		tmp[1][i] = yArr[i];
+	}
+
+	tmp[2][0] = double(arraySize);
+
+	return tmp;
+}
+
+int main(int argc, char* argv[]) {
+	/* Time function returns the time since the
+		Epoch(jan 1 1970). Returned time is in seconds. */
+	time_t start, end;
+
+	/* You can call it like this : start = time(NULL);
+	 in both the way start contain total time in seconds
+	 since the Epoch. */
+	time(&start);
+
+	// unsync the I/O of C and C++.
+	ios_base::sync_with_stdio(false);
+
+	// Check if the syntax is correct. If not, returns the error code -1 and prompts the user with the correct syntax
+	if (argc != 2) {
+		cerr << "Invalid Syntax!\nPlease run the program with the following syntax: ./program.exe filename\n";
+		return -1;
+	}
+
+	// Check if the file is valid/openable. If not, returns the error code -2.
+	ifstream f;
+	f.open(argv[1]);
+	if (!f) {
+		cerr << "File cannot be accessed. Please check again\n";
+		f.close();
+		return -2;
+	}
+	else {
+		f.close();
+	}
+
+	// Call processArray function to process arrays from csv file
+	double** tmp = processArray(argv[1]);
+
+	// Get the arraySize from tmp
+	int arraySize = int(tmp[2][0]);
+
+	// Get xArr and yArr from tmp (not copying, but rather using the address from the tmp)
+	double* xArr = tmp[0];
+	double* yArr = tmp[1];
+
+	// Clone the arrays (which won't be sorted) for usage in task C
 	double* unsortedx = new double[arraySize];
 	double* unsortedy = new double[arraySize];
 
@@ -352,7 +400,7 @@ int main(int argc, char* argv[]) {
 	double y_mean = findMean(yArr, arraySize);
 	double y_variance = findVariance(yArr, arraySize);
 	double y_stdev = findStandardDeviation(y_variance);
-	
+
 
 	// Output
 	cout << fixed;
