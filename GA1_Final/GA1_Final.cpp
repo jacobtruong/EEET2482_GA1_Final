@@ -299,7 +299,11 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 	double a = correlation_coefficient * y_stdev / x_stdev;
 	double b = y_mean - a * x_mean;
 
-	//output the equation	
+	//output the equation
+	if (b < 0) {
+		cout << "y = " << a << "x " << b << endl;
+	}
+	else
 	cout << "y = " << a << "x + " << b << endl;
 }
 
