@@ -46,18 +46,79 @@ bool validNum(string input) {
 }
 
 //Function to sort the array elements in ascending order
-void sortFunction(double* arr, int size) {
-	double tmp;
-	for (int i = 0; i < size; i++) { // The loop to allocate the elements in the array
-		for (int j = i + 1; j < size; j++) { // The loop to allocate the elements from 1 in the array
-			if (arr[i] > arr[j]) { //Compare the element n with the element n+1
-				//swap two values by using the temporary element
-				tmp = arr[i];
-				arr[i] = arr[j];
-				arr[j] = tmp;
-			}
+//void sortFunction(double* arr, int size) {
+//	double tmp;
+//	for (int i = 0; i < size; i++) { // The loop to allocate the elements in the array
+//		for (int j = i + 1; j < size; j++) { // The loop to allocate the elements from 1 in the array
+//			if (arr[i] > arr[j]) { //Compare the element n with the element n+1
+//				//swap two values by using the temporary element
+//				tmp = arr[i];
+//				arr[i] = arr[j];
+//				arr[j] = tmp;
+//			}
+//		}
+//	}
+//}
+
+void merge(double array[], int const left, int const mid, int const right)
+{
+	auto const subArrayOne = mid - left + 1;
+	auto const subArrayTwo = right - mid;
+
+	// Create temp arrays
+	auto* leftArray = new int[subArrayOne],
+		* rightArray = new int[subArrayTwo];
+
+	// Copy data to temp arrays leftArray[] and rightArray[]
+	for (auto i = 0; i < subArrayOne; i++)
+		leftArray[i] = array[left + i];
+	for (auto j = 0; j < subArrayTwo; j++)
+		rightArray[j] = array[mid + 1 + j];
+
+	auto indexOfSubArrayOne = 0, // Initial index of first sub-array
+		indexOfSubArrayTwo = 0; // Initial index of second sub-array
+	int indexOfMergedArray = left; // Initial index of merged array
+
+	// Merge the temp arrays back into array[left..right]
+	while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
+		if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
+			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+			indexOfSubArrayOne++;
 		}
+		else {
+			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+			indexOfSubArrayTwo++;
+		}
+		indexOfMergedArray++;
 	}
+	// Copy the remaining elements of
+	// left[], if there are any
+	while (indexOfSubArrayOne < subArrayOne) {
+		array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+		indexOfSubArrayOne++;
+		indexOfMergedArray++;
+	}
+	// Copy the remaining elements of
+	// right[], if there are any
+	while (indexOfSubArrayTwo < subArrayTwo) {
+		array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+		indexOfSubArrayTwo++;
+		indexOfMergedArray++;
+	}
+}
+
+// begin is for left index and end is
+// right index of the sub-array
+// of arr to be sorted */
+void sortFunction(double array[], int const begin, int const end)
+{
+	if (begin >= end)
+		return; // Returns recursively
+
+	auto mid = begin + (end - begin) / 2;
+	sortFunction(array, begin, mid);
+	sortFunction(array, mid + 1, end);
+	merge(array, begin, mid, end);
 }
 
 int countLine(string filename) {
@@ -387,8 +448,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	// Sort the arrays
-	sortFunction(xArr, arraySize);
-	sortFunction(yArr, arraySize);
+	sortFunction(xArr, 0, arraySize - 1);
+	sortFunction(yArr, 0, arraySize - 1);
 
 	// Function calls
 	double x_median = findMedian(xArr, arraySize);
