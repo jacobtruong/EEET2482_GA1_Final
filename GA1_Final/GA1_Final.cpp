@@ -169,39 +169,29 @@ double findMedian(double* arr, int arraySize) {
 
 //B.2 Function to find the Mode value
 double findMode(double* arr, int size) {
-	int maxCount = 0;
-	double mostFrequentElement = 0;
-
-	//Loops to find the maximum number of occurrences. 
-	for (int i = 0; i < size; i++) {
-		int count = 1;
-		for (int j = i + 1; j < size; j++) {
-			if (arr[i] == arr[j]) {
-				count++;
+	int currentCount = 1, maxCount = 1;
+	double mode = arr[0];
+	//For loops to find the maximum number of occurrences and the smallest most frequent element
+	for (int i = 1; i < size; i++) {
+		if (arr[i] == arr[i - 1])
+			currentCount++;
+		else {
+			if (currentCount > maxCount) {
+				maxCount = currentCount;
+				mode = arr[i - 1];
 			}
-		}
-		if (count > maxCount) {
-			maxCount = count;
+			currentCount = 1;
 		}
 	}
 
-	//Loops to compare the maximum number of occurrences to the occurrences of elements. 
-	for (int i = 0; i < size; i++) {
-		int count = 1;
-		for (int j = i + 1; j < size; j++) {
-			if (arr[i] == arr[j]) {
-				count++;
-			}
-		}
-
-		//Find the lowest mode value because the array is sorted.
-		if (count == maxCount) {
-			mostFrequentElement = arr[i];
-			break;
-		}
+	//check if the last element is mode value
+	if (currentCount > maxCount)
+	{
+		maxCount = currentCount;
+		mode = arr[size - 1];
 	}
 
-	return mostFrequentElement; //Return the most frequently occured element in the array.
+	return mode; //Return the most frequently occured element in the array.
 }
 
 //B.3.1 Function to Find the variance 
@@ -465,7 +455,7 @@ int main(int argc, char* argv[]) {
 
 	// Output
 	cout << fixed;
-	cout << setprecision(5);
+	cout << setprecision(10);
 
 	// Task B
 	cout << "Task B:\n";
