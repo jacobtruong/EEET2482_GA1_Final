@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream>
 #include <cmath>
 #include <iomanip>
 
@@ -301,18 +300,45 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 		cout << "y = " << a << "x + " << b << endl;
 }
 
+string getx(string str, char del) {
+	// Declaring temp string to store the curr "word" upto del
+	string tmp = "";
+
+	for (int i = 0; i < (int)str.size(); i++) {
+		// If cur char is not del, then append it to the cur "word", otherwise
+		  // you have completed the word, print it, and start a new word.
+		if (str[i] != del) {
+			tmp += str[i];
+		}
+		else {
+			return tmp;
+		}
+	}
+
+	return tmp;
+}
+
+string gety(string str, char del) {
+	// Declaring temp string to store the curr "word" upto del
+	string tmp = "";
+
+	for (int i = 0; i < (int)str.size(); i++) {
+		// If cur char is not del, then append it to the cur "word", otherwise
+		  // you have completed the word, print it, and start a new word.
+		if (str[i] != del) {
+			tmp += str[i];
+		}
+		else {
+			tmp = "";
+		}
+	}
+
+	return tmp;
+}
+
 double** processCSVToArrays(string fileName) {
 	// Open file
 	ifstream file(fileName);
-
-	//// Return an array of {{-1}, {-1}} to mark an error
-	//if (!file) {
-	//	cerr << "Cannot open file.\n";
-	//	double** err = new double* [2];
-	//	err[0] = new double[1]{ -1 };
-	//	err[1] = new double[1]{ -1 };
-	//	EXIT_FAILURE;
-	//}
 
 	// Count the number of lines within the csv file
 	int arraySizeRaw = countLine(fileName);
@@ -321,17 +347,12 @@ double** processCSVToArrays(string fileName) {
 	double* xArrRaw = new double[arraySizeRaw] {'\0'};
 	double* yArrRaw = new double[arraySizeRaw] {'\0'};
 
-	string line;
+	string token1, token2;
 	int i = 0;
 
 	// From the opened file, get the x and y values and put them into the respective arrays
-	while (getline(file, line)) {
-		stringstream ss(line);
-		string token1;
-		string token2;
-
-		getline(ss, token1, ',');
-		getline(ss, token2, ',');
+	while (getline(file, token1, ',')) {
+		getline(file, token2);
 
 		if (!validNum(token1) || !validNum(token2)) {
 			continue;
@@ -460,8 +481,7 @@ void computeAndDisplayResult(string fileName) {
 }
 
 int main(int argc, char* argv[]) {
-	/* Time function returns the time since the
-		Epoch(jan 1 1970). Returned time is in seconds. */
+	// Time function returns the time since the Epoch(1 Jan 1970). Returned time is in seconds.
 	time_t start, end;
 
 	/* You can call it like this : start = time(NULL);
@@ -474,7 +494,7 @@ int main(int argc, char* argv[]) {
 
 	// Check if the syntax is correct. If not, returns the error code -1 and prompts the user with the correct syntax
 	if (argc != 2) {
-		cerr << "Invalid Syntax!\nPlease run the program with the following syntax: ./program.exe filename\n";
+		cerr << "Invalid Syntax!\nPlease run the program with the following syntax: ./assignment1_group23.exe <filename>.csv\n";
 		return -1;
 	}
 
@@ -498,8 +518,8 @@ int main(int argc, char* argv[]) {
 
 	// Calculating total time taken by the program.
 	double time_taken = double(end - start);
-	cout << "Time taken by program is : " << fixed
-		<< time_taken << setprecision(15);
+	cout << "\nTime taken by program is: " << fixed
+		<< time_taken << setprecision(5);
 	cout << " sec " << endl;
 
 	return 0;
