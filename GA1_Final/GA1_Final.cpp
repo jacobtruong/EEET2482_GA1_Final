@@ -45,21 +45,7 @@ bool validNum(string input) {
 	return true;
 }
 
-//Function to sort the array elements in ascending order
-//void sortFunction(double* arr, int size) {
-//	double tmp;
-//	for (int i = 0; i < size; i++) { // The loop to allocate the elements in the array
-//		for (int j = i + 1; j < size; j++) { // The loop to allocate the elements from 1 in the array
-//			if (arr[i] > arr[j]) { //Compare the element n with the element n+1
-//				//swap two values by using the temporary element
-//				tmp = arr[i];
-//				arr[i] = arr[j];
-//				arr[j] = tmp;
-//			}
-//		}
-//	}
-//}
-
+//Functions to sort the array elements in ascending order
 void merge(double array[], int const left, int const mid, int const right)
 {
 	auto const subArrayOne = mid - left + 1;
@@ -110,14 +96,14 @@ void merge(double array[], int const left, int const mid, int const right)
 // begin is for left index and end is
 // right index of the sub-array
 // of arr to be sorted */
-void sortFunction(double array[], int const begin, int const end)
+void sortArray(double array[], int const begin, int const end)
 {
 	if (begin >= end)
 		return; // Returns recursively
 
 	auto mid = begin + (end - begin) / 2;
-	sortFunction(array, begin, mid);
-	sortFunction(array, mid + 1, end);
+	sortArray(array, begin, mid);
+	sortArray(array, mid + 1, end);
 	merge(array, begin, mid, end);
 }
 
@@ -125,15 +111,15 @@ void sortFunction(double array[], int const begin, int const end)
 int countLine(string filename) {
 	//Open file
 	ifstream file(filename);
-	
+
 	int count = 0;
 	string line;
-	
+
 	//While loop to count line 
-	while (getline(file, line)) { 
+	while (getline(file, line)) {
 		count++;
 	}
-	
+
 	//Close file
 	file.close();
 	return count;
@@ -168,7 +154,7 @@ double findMedian(double* arr, int arraySize) {
 double findMode(double* arr, int size) {
 	int currentCount = 1, maxCount = 1;
 	double mode = arr[0];
-	
+
 	//For loops to find the maximum number of occurrences 
 	//and the smallest most frequent element
 	for (int i = 1; i < size; i++) {
@@ -191,31 +177,31 @@ double findMode(double* arr, int size) {
 	}
 
 	//Return the most frequently occured element in the array.
-	return mode; 
+	return mode;
 }
 
 //B.3.1 Function to Find the variance 
-double findVariance(double* arr, int size) {
+double findVariance(double* arr, int size, double mean) {
 	double sum = 0;
-	
+
 	//For loop to count the sum of (x-mean(x))^2.
-	for (int i = 0; i < size; i++) { 
-		sum = sum + pow(arr[i] - findMean(arr, size), 2);
+	for (int i = 0; i < size; i++) {
+		sum = sum + pow(arr[i] - mean, 2);
 	}
-	
+
 	//Calculate the variance by dividing sum by (size - 1)
-	double var = sum / (size - 1); 
-	
+	double var = sum / (size - 1);
+
 	return var;
 }
 
 //B.3.2 Function to find the Standard Deviation
 double findStandardDeviation(double variance) {
 	double stdDeviation = 0;
-	
+
 	//Calculate by using the sqrt() function for variance.
-	stdDeviation = sqrt(variance); 
-	
+	stdDeviation = sqrt(variance);
+
 	return stdDeviation;
 }
 
@@ -312,10 +298,10 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 		cout << "y = " << a << "x " << b << endl;
 	}
 	else
-	cout << "y = " << a << "x + " << b << endl;
+		cout << "y = " << a << "x + " << b << endl;
 }
 
-double** processArray(string fileName) {
+double** processCSVToArrays(string fileName) {
 	// Open file
 	ifstream file(fileName);
 
@@ -380,8 +366,8 @@ double** processArray(string fileName) {
 	}
 
 	// Delete the original arrays
-	delete [] xArrRaw;
-	delete [] yArrRaw;
+	delete[] xArrRaw;
+	delete[] yArrRaw;
 
 	double** tmp = new double* [3];
 
@@ -400,16 +386,16 @@ double** processArray(string fileName) {
 }
 
 void computeAndDisplayResult(string fileName) {
-	// Call processArray function to process arrays from csv file
-	double** tmp = processArray(fileName);
+	// Call processCSVToArrays function to process arrays from csv file
+	double** tmp = processCSVToArrays(fileName);
 
 	// Get the arraySize from tmp
 	int arraySize = int(tmp[2][0]);
-	
+
 	// Get xArr and yArr from tmp (not copying, but rather using the address from the tmp)
 	double* xArr = tmp[0];
 	double* yArr = tmp[1];
-	
+
 	// Clone the arrays (which won't be sorted) for usage in task C
 	double* unsortedx = new double[arraySize];
 	double* unsortedy = new double[arraySize];
@@ -420,18 +406,18 @@ void computeAndDisplayResult(string fileName) {
 	}
 
 	// Sort the arrays
-	sortFunction(xArr, 0, arraySize - 1);
-	sortFunction(yArr, 0, arraySize - 1);
+	sortArray(xArr, 0, arraySize - 1);
+	sortArray(yArr, 0, arraySize - 1);
 
 	// Function calls
 	double x_median = findMedian(xArr, arraySize);
 	double x_mean = findMean(xArr, arraySize);
-	double x_variance = findVariance(xArr, arraySize);
+	double x_variance = findVariance(xArr, arraySize, x_mean);
 	double x_stdev = findStandardDeviation(x_variance);
 
 	double y_median = findMedian(yArr, arraySize);
 	double y_mean = findMean(yArr, arraySize);
-	double y_variance = findVariance(yArr, arraySize);
+	double y_variance = findVariance(yArr, arraySize, y_mean);
 	double y_stdev = findStandardDeviation(y_variance);
 
 
@@ -504,6 +490,7 @@ int main(int argc, char* argv[]) {
 		f.close();
 	}
 
+	// Call function to compute and display the statistical calculations
 	computeAndDisplayResult(argv[1]);
 
 	// Recording end time.qq 
@@ -512,7 +499,7 @@ int main(int argc, char* argv[]) {
 	// Calculating total time taken by the program.
 	double time_taken = double(end - start);
 	cout << "Time taken by program is : " << fixed
-		<< time_taken << setprecision(5);
+		<< time_taken << setprecision(15);
 	cout << " sec " << endl;
 
 	return 0;
