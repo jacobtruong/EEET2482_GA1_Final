@@ -300,42 +300,6 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 		cout << "y = " << a << "x + " << b << endl;
 }
 
-string getx(string str, char del) {
-	// Declaring temp string to store the curr "word" upto del
-	string tmp = "";
-
-	for (int i = 0; i < (int)str.size(); i++) {
-		// If cur char is not del, then append it to the cur "word", otherwise
-		  // you have completed the word, print it, and start a new word.
-		if (str[i] != del) {
-			tmp += str[i];
-		}
-		else {
-			return tmp;
-		}
-	}
-
-	return tmp;
-}
-
-string gety(string str, char del) {
-	// Declaring temp string to store the curr "word" upto del
-	string tmp = "";
-
-	for (int i = 0; i < (int)str.size(); i++) {
-		// If cur char is not del, then append it to the cur "word", otherwise
-		  // you have completed the word, print it, and start a new word.
-		if (str[i] != del) {
-			tmp += str[i];
-		}
-		else {
-			tmp = "";
-		}
-	}
-
-	return tmp;
-}
-
 double** processCSVToArrays(string fileName) {
 	// Open file
 	ifstream file(fileName);
