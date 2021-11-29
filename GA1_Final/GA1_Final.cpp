@@ -202,14 +202,14 @@ double findStandardDeviation(double variance) {
 	return stdDeviation;
 }
 
-//B.4 Function to find mean standard deviation
+//B.4 Function to find mean absolute deviations
 double findMAD(double* arr, int size, double mean) {
 	double sum = 0;
 
 	for (int i = 0; i < size; i++) //for each row in the dataset
 		sum = sum + abs(arr[i] - mean); //calculation
 
-	return sum / size; //return the mean standard deviation
+	return sum / size; //return the mean absolute deviations
 }
 
 
@@ -290,7 +290,11 @@ void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, d
 	double a = correlation_coefficient * y_stdev / x_stdev;
 	double b = y_mean - a * x_mean;
 
-	//output the equation	
+	//output the equation
+	if (b < 0) {
+		cout << "y = " << a << "x " << b << endl;
+	}
+	else
 	cout << "y = " << a << "x + " << b << endl;
 }
 
