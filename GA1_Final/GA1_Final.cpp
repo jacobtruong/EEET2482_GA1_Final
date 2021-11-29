@@ -467,7 +467,7 @@ void computeAndDisplayResult(string fileName) {
 	// C.3
 	findLinearRegression(xArr, yArr, arraySize, x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
 
-	// Preventing Memory Leak
+	// Preventing Memory Leak 
 	delete[] tmp[0];
 	delete[] tmp[1];
 	delete[] tmp[2];
