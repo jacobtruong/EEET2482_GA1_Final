@@ -442,19 +442,15 @@ void computeAndDisplayResult(string fileName) {
 	delete[] tmp[0];
 	delete[] tmp[1];
 	delete[] tmp[2];
+	delete[] tmp;
 }
 
 int main(int argc, char* argv[]) {
 	// Time function returns the time since the Epoch(1 Jan 1970). Returned time is in seconds.
 	time_t start, end;
 
-	/* You can call it like this : start = time(NULL);
-	 in both the way start contain total time in seconds
-	 since the Epoch. */
+	// Record start time
 	time(&start);
-
-	// unsync the I/O of C and C++.
-	ios_base::sync_with_stdio(false);
 
 	// Check if the syntax is correct. If not, returns the error code -1 and prompts the user with the correct syntax
 	if (argc != 2) {
@@ -477,14 +473,13 @@ int main(int argc, char* argv[]) {
 	// Call function to compute and display the statistical calculations
 	computeAndDisplayResult(argv[1]);
 
-	// Recording end time.qq 
+	// Record end time
 	time(&end);
 
 	// Calculating total time taken by the program.
 	double time_taken = double(end - start);
-	cout << "\nTime taken by program is: " << fixed
-		<< time_taken << setprecision(5);
-	cout << " sec " << endl;
+	cout << "\nTime taken by program is: " << fixed << time_taken << " seconds " << endl;
+	cout << "(If time taken is 0s, it means the program ran in less than 1s)\n";
 
 	return 0;
 }
