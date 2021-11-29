@@ -143,15 +143,6 @@ double findMean(double* arr, int size) {
 }
 
 //B.1 Function to find the Median value
-//double findMedian(double* arr, int size) {
-//	if (size % 2 == 1) { //check if the array size is odd.
-//		return arr[size / 2]; //return the median of the odd array
-//	}
-//	else if (size % 2 == 0) { //check if the array size is even.
-//		return (arr[(size / 2) - 1] + arr[(size / 2)]) / 2; //return the median of the even array
-//	}
-//}
-
 double findMedian(double* arr, int arraySize) {
 	float q2_position_full = -1 + 2 * float(arraySize) / 4 + 0.5;
 
@@ -387,39 +378,9 @@ double** processArray(string fileName) {
 	return tmp;
 }
 
-int main(int argc, char* argv[]) {
-	/* Time function returns the time since the
-		Epoch(jan 1 1970). Returned time is in seconds. */
-	time_t start, end;
-
-	/* You can call it like this : start = time(NULL);
-	 in both the way start contain total time in seconds
-	 since the Epoch. */
-	time(&start);
-
-	// unsync the I/O of C and C++.
-	ios_base::sync_with_stdio(false);
-
-	// Check if the syntax is correct. If not, returns the error code -1 and prompts the user with the correct syntax
-	if (argc != 2) {
-		cerr << "Invalid Syntax!\nPlease run the program with the following syntax: ./program.exe filename\n";
-		return -1;
-	}
-
-	// Check if the file is valid/openable. If not, returns the error code -2.
-	ifstream f;
-	f.open(argv[1]);
-	if (!f) {
-		cerr << "File cannot be accessed. Please check again\n";
-		f.close();
-		return -2;
-	}
-	else {
-		f.close();
-	}
-
+void computeAndDisplayResult(string fileName) {
 	// Call processArray function to process arrays from csv file
-	double** tmp = processArray(argv[1]);
+	double** tmp = processArray(fileName);
 
 	// Get the arraySize from tmp
 	int arraySize = int(tmp[2][0]);
@@ -484,6 +445,40 @@ int main(int argc, char* argv[]) {
 	cout << "r(x_y) = " << correlation_coefficient << endl;
 	// C.3
 	findLinearRegression(xArr, yArr, arraySize, x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
+}
+
+int main(int argc, char* argv[]) {
+	/* Time function returns the time since the
+		Epoch(jan 1 1970). Returned time is in seconds. */
+	time_t start, end;
+
+	/* You can call it like this : start = time(NULL);
+	 in both the way start contain total time in seconds
+	 since the Epoch. */
+	time(&start);
+
+	// unsync the I/O of C and C++.
+	ios_base::sync_with_stdio(false);
+
+	// Check if the syntax is correct. If not, returns the error code -1 and prompts the user with the correct syntax
+	if (argc != 2) {
+		cerr << "Invalid Syntax!\nPlease run the program with the following syntax: ./program.exe filename\n";
+		return -1;
+	}
+
+	// Check if the file is valid/openable. If not, returns the error code -2.
+	ifstream f;
+	f.open(argv[1]);
+	if (!f) {
+		cerr << "File cannot be accessed. Please check again\n";
+		f.close();
+		return -2;
+	}
+	else {
+		f.close();
+	}
+
+	computeAndDisplayResult(argv[1]);
 
 	// Recording end time.qq 
 	time(&end);
