@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cmath>
+#include <math.h>
 #include <iomanip>
 
 using namespace std;
 
+// Function to check if the inputted number is valid
 bool validNum(string input) {
 	// If string is empty, return false
 	int len = input.length();
