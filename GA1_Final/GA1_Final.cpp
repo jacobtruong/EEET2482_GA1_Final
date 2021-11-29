@@ -217,7 +217,7 @@ double findMAD(double* arr, int arraySize, double mean) {
 
 
 //B.5 Function to find the 3rd Quartile Exclusively
-double find3rdQuartile(double* arr, int arraySize) {
+double findThirdQuartile(double* arr, int arraySize) {
 	float q3_position_full = -1 + 3 * float(arraySize) / 4 + 0.75;
 
 	// Taking the integer part
@@ -425,7 +425,7 @@ void computeAndDisplayResult(string fileName) {
 	// B.4
 	cout << "mad_x = " << findMAD(xArr, arraySize, x_mean) << " - " << "mad_y = " << findMAD(yArr, arraySize, y_mean) << endl;
 	// B.5
-	cout << "Q3_x = " << find3rdQuartile(xArr, arraySize) << " - " << "Q3_y = " << find3rdQuartile(yArr, arraySize) << endl;
+	cout << "Q3_x = " << findThirdQuartile(xArr, arraySize) << " - " << "Q3_y = " << findThirdQuartile(yArr, arraySize) << endl;
 	// B.6
 	cout << "skew_x = " << findSkewness(xArr, arraySize, x_mean, x_stdev) << " - " << "skew_y = " << findSkewness(yArr, arraySize, y_mean, y_stdev) << endl;
 	// B.7
@@ -449,6 +449,8 @@ void computeAndDisplayResult(string fileName) {
 }
 
 int main(int argc, char* argv[]) {
+	// We calculate the time the program takes to run by getting the time at the 
+	// beginning and end of the main function and subtract the end time by the start time.
 	// Time function returns the time since the Epoch(1 Jan 1970). Returned time is in seconds.
 	time_t start, end;
 
