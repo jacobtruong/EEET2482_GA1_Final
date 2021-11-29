@@ -125,12 +125,12 @@ int countLine(string filename) {
 }
 
 //Function to find the Mean of the array.
-double findMean(double* arr, int size) {
+double findMean(double* arr, int arraySize) {
 	double sum = 0;
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < arraySize; i++) {
 		sum += arr[i];
 	}
-	return sum / size; //Return the average of the array.
+	return sum / arraySize; //Return the average of the array.
 }
 
 //B.1 Function to find the Median value
@@ -150,13 +150,13 @@ double findMedian(double* arr, int arraySize) {
 }
 
 //B.2 Function to find the Mode value
-double findMode(double* arr, int size) {
+double findMode(double* arr, int arraySize) {
 	int currentCount = 1, maxCount = 1;
 	double mode = arr[0];
 
 	//For loops to find the maximum number of occurrences 
 	//and the smallest most frequent element
-	for (int i = 1; i < size; i++) {
+	for (int i = 1; i < arraySize; i++) {
 		if (arr[i] == arr[i - 1])
 			currentCount++;
 		else {
@@ -172,7 +172,7 @@ double findMode(double* arr, int size) {
 	if (currentCount > maxCount)
 	{
 		maxCount = currentCount;
-		mode = arr[size - 1];
+		mode = arr[arraySize - 1];
 	}
 
 	//Return the most frequently occured element in the array.
@@ -180,16 +180,16 @@ double findMode(double* arr, int size) {
 }
 
 //B.3.1 Function to Find the variance 
-double findVariance(double* arr, int size, double mean) {
+double findVariance(double* arr, int arraySize, double mean) {
 	double sum = 0;
 
 	//For loop to count the sum of (x-mean(x))^2.
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < arraySize; i++) {
 		sum = sum + pow(arr[i] - mean, 2);
 	}
 
-	//Calculate the variance by dividing sum by (size - 1)
-	double var = sum / (size - 1);
+	//Calculate the variance by dividing sum by (arraySize - 1)
+	double var = sum / (arraySize - 1);
 
 	return var;
 }
@@ -205,13 +205,13 @@ double findStandardDeviation(double variance) {
 }
 
 //B.4 Function to find mean absolute deviations
-double findMAD(double* arr, int size, double mean) {
+double findMAD(double* arr, int arraySize, double mean) {
 	double sum = 0;
 
-	for (int i = 0; i < size; i++) //for each row in the dataset
+	for (int i = 0; i < arraySize; i++) //for each row in the dataset
 		sum = sum + abs(arr[i] - mean); //calculation
 
-	return sum / size; //return the mean absolute deviations
+	return sum / arraySize; //return the mean absolute deviations
 }
 
 
@@ -234,6 +234,8 @@ double find3rdQuartile(double* arr, int arraySize) {
 //B.6 Function to find the Skewness
 double findSkewness(double* arr, int arraySize, double mean, double standard_deviation) {
 	double total = 0;
+
+	// arraySize could be used directly, but n is shorter and cleaner
 	double n = arraySize;
 
 	// Loop through each element of the array and calculate total using the formula
@@ -245,35 +247,35 @@ double findSkewness(double* arr, int arraySize, double mean, double standard_dev
 }
 
 // B.7 Function to find kurtosis
-double findKurtosis(double* arr, int size, double mean, double standard_deviation) {
+double findKurtosis(double* arr, int arraySize, double mean, double standard_deviation) {
 	double sum = 0;
-	for (int i = 0; i < size; i++) //for each row in the dataset
+	for (int i = 0; i < arraySize; i++) //for each row in the dataset
 		sum += pow((arr[i] - mean), 4); //calculation
-	return (sum / ((size * pow(standard_deviation, 4)))) - 3; //return the kurtosis
+	return (sum / ((arraySize * pow(standard_deviation, 4)))) - 3; //return the kurtosis
 }
 
 
 //C.1 Function to find the Covariance    
-double findCovariance(double* arrX, double* arrY, int size, double x_mean, double y_mean) {
+double findCovariance(double* arrX, double* arrY, int arraySize, double x_mean, double y_mean) {
 	double sum = 0;
 
 	//For loop to count sum of x-mean(x) * y-mean(y).
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < arraySize; i++) {
 		sum = sum + (arrX[i] - x_mean) * (arrY[i] - y_mean);
 	}
 
-	sum = sum / (size - 1); //Calculate Covariance by dividing sum by (size - 1).
+	sum = sum / (arraySize - 1); //Calculate Covariance by dividing sum by (size - 1).
 
 	return sum;
 }
 
 
 //C.2 Function to find the Correlation Coefficient   
-double findCorrelationCoefficient(double* arrX, double* arrY, int size) {
+double findCorrelationCoefficient(double* arrX, double* arrY, int arraySize) {
 	double total_X = 0, total_Y = 0, total_XY = 0;
 	double square_sum_X = 0, square_sum_Y = 0;
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < arraySize; i++) {
 		total_X = total_X + arrX[i]; //calculate total value of array X
 		total_Y = total_Y + arrY[i]; //calculate total value of array Y
 		total_XY = total_XY + arrX[i] * arrY[i]; //calculate total value of x * y
@@ -281,13 +283,13 @@ double findCorrelationCoefficient(double* arrX, double* arrY, int size) {
 		square_sum_Y = square_sum_Y + arrY[i] * arrY[i]; //calculate total value of y^2
 	}
 
-	double r = (size * total_XY - total_X * total_Y) / sqrt((size * square_sum_X - (total_X * total_X)) * (size * square_sum_Y - (total_Y * total_Y)));
+	double r = (arraySize * total_XY - total_X * total_Y) / sqrt((arraySize * square_sum_X - (total_X * total_X)) * (arraySize * square_sum_Y - (total_Y * total_Y)));
 
 	return r; //return the Correlation Coefficient
 }
 
 //C.3 Function to find linear regression
-void findLinearRegression(double* xArr, double* yArr, int size, double x_mean, double y_mean, double x_stdev, double y_stdev, double correlation_coefficient) {
+void findLinearRegression(double x_mean, double y_mean, double x_stdev, double y_stdev, double correlation_coefficient) {
 	// calculations
 	double a = correlation_coefficient * y_stdev / x_stdev;
 	double b = y_mean - a * x_mean;
@@ -436,7 +438,7 @@ void computeAndDisplayResult(string fileName) {
 	double correlation_coefficient = findCorrelationCoefficient(unsortedx, unsortedy, arraySize);
 	cout << "r(x_y) = " << correlation_coefficient << endl;
 	// C.3
-	findLinearRegression(xArr, yArr, arraySize, x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
+	findLinearRegression(x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
 
 	// Preventing Memory Leak 
 	delete[] tmp[0];
