@@ -388,11 +388,11 @@ void computeAndDisplayResult(string fileName) {
 
 	// Get the arraySize from tmp
 	int arraySize = int(tmp[2][0]);
-
+	
 	// Get xArr and yArr from tmp (not copying, but rather using the address from the tmp)
 	double* xArr = tmp[0];
 	double* yArr = tmp[1];
-
+	
 	// Clone the arrays (which won't be sorted) for usage in task C
 	double* unsortedx = new double[arraySize];
 	double* unsortedy = new double[arraySize];
@@ -449,6 +449,11 @@ void computeAndDisplayResult(string fileName) {
 	cout << "r(x_y) = " << correlation_coefficient << endl;
 	// C.3
 	findLinearRegression(xArr, yArr, arraySize, x_mean, y_mean, x_stdev, y_stdev, correlation_coefficient);
+
+	// Preventing Memory Leak
+	delete[] tmp[0];
+	delete[] tmp[1];
+	delete[] tmp[2];
 }
 
 int main(int argc, char* argv[]) {
