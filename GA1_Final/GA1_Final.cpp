@@ -380,8 +380,8 @@ double** processArray(string fileName) {
 	}
 
 	// Delete the original arrays
-	delete(xArrRaw);
-	delete(yArrRaw);
+	delete [] xArrRaw;
+	delete [] yArrRaw;
 
 	double** tmp = new double* [3];
 
