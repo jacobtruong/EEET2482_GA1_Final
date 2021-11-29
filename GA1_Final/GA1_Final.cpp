@@ -451,7 +451,6 @@ void computeAndDisplayResult(string fileName) {
 int main(int argc, char* argv[]) {
 	// We calculate the time the program takes to run by getting the time at the 
 	// beginning and end of the main function and subtract the end time by the start time.
-	// Time function returns the time since the Epoch(1 Jan 1970). Returned time is in seconds.
 	time_t start, end;
 
 	// Record start time
