@@ -121,14 +121,20 @@ void sortFunction(double array[], int const begin, int const end)
 	merge(array, begin, mid, end);
 }
 
+//Function to count the number of file's lines
 int countLine(string filename) {
+	//Open file
 	ifstream file(filename);
+	
 	int count = 0;
-
 	string line;
-	while (getline(file, line)) {
+	
+	//While loop to count line 
+	while (getline(file, line)) { 
 		count++;
 	}
+	
+	//Close file
 	file.close();
 	return count;
 }
@@ -171,7 +177,9 @@ double findMedian(double* arr, int arraySize) {
 double findMode(double* arr, int size) {
 	int currentCount = 1, maxCount = 1;
 	double mode = arr[0];
-	//For loops to find the maximum number of occurrences and the smallest most frequent element
+	
+	//For loops to find the maximum number of occurrences 
+	//and the smallest most frequent element
 	for (int i = 1; i < size; i++) {
 		if (arr[i] == arr[i - 1])
 			currentCount++;
@@ -191,23 +199,32 @@ double findMode(double* arr, int size) {
 		mode = arr[size - 1];
 	}
 
-	return mode; //Return the most frequently occured element in the array.
+	//Return the most frequently occured element in the array.
+	return mode; 
 }
 
 //B.3.1 Function to Find the variance 
 double findVariance(double* arr, int size) {
 	double sum = 0;
-	for (int i = 0; i < size; i++) { //For loop to count the sum of (x-mean(x))^2.
+	
+	//For loop to count the sum of (x-mean(x))^2.
+	for (int i = 0; i < size; i++) { 
 		sum = sum + pow(arr[i] - findMean(arr, size), 2);
 	}
-	double var = sum / (size - 1); //Calculate the variance by dividing sum by (size - 1 - 1) in the true size.
+	
+	//Calculate the variance by dividing sum by (size - 1)
+	double var = sum / (size - 1); 
+	
 	return var;
 }
 
 //B.3.2 Function to find the Standard Deviation
 double findStandardDeviation(double variance) {
 	double stdDeviation = 0;
-	stdDeviation = sqrt(variance); //Calculate by using the sqrt() function.
+	
+	//Calculate by using the sqrt() function for variance.
+	stdDeviation = sqrt(variance); 
+	
 	return stdDeviation;
 }
 
