@@ -52,8 +52,8 @@ void merge(double array[], int const left, int const mid, int const right)
 	auto const subArrayTwo = right - mid;
 
 	// Create temp arrays
-	auto* leftArray = new int[subArrayOne],
-		* rightArray = new int[subArrayTwo];
+	auto* leftArray = new double[subArrayOne],
+		* rightArray = new double[subArrayTwo];
 
 	// Copy data to temp arrays leftArray[] and rightArray[]
 	for (auto i = 0; i < subArrayOne; i++)
@@ -136,7 +136,7 @@ double findMean(double* arr, int arraySize) {
 
 //B.1 Function to find the Median value
 double findMedian(double* arr, int arraySize) {
-	float q2_position_full = -1 + 2 * float(arraySize) / 4 + 0.5;
+	float q2_position_full = -1 + 2 * float(arraySize) / 4 + float(0.5);
 
 	// Taking the integer part
 	int q2_position_int = int(q2_position_full);
@@ -218,7 +218,7 @@ double findMAD(double* arr, int arraySize, double mean) {
 
 //B.5 Function to find the 3rd Quartile Exclusively
 double findThirdQuartile(double* arr, int arraySize) {
-	float q3_position_full = -1 + 3 * float(arraySize) / 4 + 0.75;
+	float q3_position_full = -1 + 3 * float(arraySize) / 4 + float(0.75);
 
 	// Taking the integer part
 	int q3_position_int = int(q3_position_full);
@@ -484,6 +484,12 @@ int main(int argc, char* argv[]) {
 	double time_taken = double(end - start);
 	cout << "\nTime taken by program is: " << fixed << time_taken << " seconds " << endl;
 	cout << "(If time taken is 0s, it means the program ran in less than 1s)\n";
+
+	// Outputting Group information as specifed
+	cout << "\nASSIGNMENT 1 GROUP 23\n";
+	cout << "s3878145, s3878145@rmit.edu.vn, Tri, Truong\n";
+	cout << "s3872105, s3872105@rmit.edu.vn, Thang, Nguyen\n";
+	cout << "s3878496, s3878496@rmit.edu.vn, Dat, Pham\n";
 
 	return 0;
 }
